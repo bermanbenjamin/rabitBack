@@ -1,0 +1,17 @@
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { HabitHistoryDayWhereUniqueInput } from './habit-history-day-where-unique.input';
+import { Type } from 'class-transformer';
+import { HabitHistoryDayUpdateWithoutHabitInput } from './habit-history-day-update-without-habit.input';
+
+@InputType()
+export class HabitHistoryDayUpdateWithWhereUniqueWithoutHabitInput {
+
+    @Field(() => HabitHistoryDayWhereUniqueInput, {nullable:false})
+    @Type(() => HabitHistoryDayWhereUniqueInput)
+    where!: HabitHistoryDayWhereUniqueInput;
+
+    @Field(() => HabitHistoryDayUpdateWithoutHabitInput, {nullable:false})
+    @Type(() => HabitHistoryDayUpdateWithoutHabitInput)
+    data!: HabitHistoryDayUpdateWithoutHabitInput;
+}

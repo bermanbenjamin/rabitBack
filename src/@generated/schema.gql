@@ -1,0 +1,2049 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type HabitHistoryDay {
+  id: ID!
+  Habit: Habit!
+  habitId: String!
+  date: Timestamp!
+  frequencyOnThisDay: Int!
+  doneTimes: Int!
+  secondsPerFrequency: [Int!]
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type HabitTimer {
+  id: ID!
+  habit: Habit
+  isActive: Boolean!
+  time: Timestamp!
+}
+
+type UserSettings {
+  id: ID!
+  user: User
+  isOnVacation: Boolean!
+  isWithoutAlarms: Boolean!
+  weekStartsOn: Int!
+}
+
+type ToDoSubtask {
+  id: ID!
+  toDoTask: ToDoTask!
+  toDoTaskId: String!
+  title: String!
+  isDone: Boolean!
+}
+
+type ToDoTaskCount {
+  subTasks: Int!
+}
+
+type ToDoTask {
+  id: ID!
+  toDoListId: String!
+  title: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  lastDone: Timestamp
+  date: Timestamp!
+  frequenciesByRepeatType: Int!
+  daysOfWeek: [Int!]
+  repeatType: DateTimeRepeatEnum!
+  subTasks: [ToDoSubtask!]
+  toDoList: ToDoList!
+  _count: ToDoTaskCount!
+}
+
+enum DateTimeRepeatEnum {
+  never
+  day
+  week
+  month
+}
+
+type ToDoListCount {
+  tasks: Int!
+}
+
+type ToDoList {
+  id: ID!
+  title: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  isDeleted: Boolean!
+  userId: String
+  tasks: [ToDoTask!]
+  user: User
+  _count: ToDoListCount!
+}
+
+type UserCount {
+  routines: Int!
+  habits: Int!
+  toDos: Int!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  age: Int!
+  birthdate: Timestamp!
+  coins: Int!
+  bestStreak: Int!
+  currentStreak: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  isDeleted: Boolean!
+  lastDailyReward: Timestamp!
+  dailyRewardCount: Int!
+  userSettingsId: String!
+  plants: [PlantEnum!]
+  userSettings: UserSettings!
+  routines: [Routine!]
+  habits: [Habit!]
+  toDos: [ToDoList!]
+  _count: UserCount!
+}
+
+enum PlantEnum {
+  piuva
+  almofadinha
+  mrCarrot
+  nunos
+  losNachos
+  miau
+  esconderijoDoToto
+  caioCoqueiro
+  cartolesco
+}
+
+type RoutineCount {
+  habits: Int!
+}
+
+type Routine {
+  id: ID!
+  User: User
+  userId: String
+  title: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  isDeleted: Boolean!
+  habits: [Habit!]
+  _count: RoutineCount!
+}
+
+type HabitPlant {
+  id: ID!
+  habit: Habit
+  positionBot: Int!
+  positionLeft: Int!
+  plant: PlantEnum!
+}
+
+type HabitReminder {
+  id: ID!
+  Habit: Habit!
+  habitId: String!
+  date: Timestamp!
+  isAlarm: Boolean!
+}
+
+type HabitInterval {
+  id: ID!
+  Habit: Habit
+  timesPerWeek: Int!
+  daysOfWeek: [Int!]
+  type: HabitIntervalTypeEnum!
+}
+
+enum HabitIntervalTypeEnum {
+  everyOtherDay
+  daily
+  weekly
+}
+
+type HabitCount {
+  history: Int!
+  reminder: Int!
+}
+
+type Habit {
+  id: ID!
+  routineId: String
+  userId: String
+  frequencyPerDay: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  title: String!
+  isPaused: Boolean!
+  lastPlantReward: Timestamp!
+  isDeleted: Boolean!
+  habitPlantId: String!
+  habitTimerId: String!
+  habitIntervalId: String!
+  color: HabitColorEnum!
+  icon: HabitIconEnum!
+  period: HabitPeriodEnum!
+  history: [HabitHistoryDay!]
+  timer: HabitTimer!
+  Routine: Routine
+  User: User
+  plant: HabitPlant!
+  reminder: [HabitReminder!]
+  interval: HabitInterval!
+  _count: HabitCount!
+}
+
+enum HabitColorEnum {
+  blue
+  brown
+  green
+  orange
+  cyan
+  pink
+  purple
+  red
+  yellow
+}
+
+enum HabitIconEnum {
+  purple1
+  purple2
+  purple3
+  purple4
+  orange1
+  orange2
+  orange3
+  orange4
+  cyan1
+  cyan2
+  cyan3
+  cyan4
+  red1
+  red2
+  red3
+  red4
+  red5
+  red6
+  red7
+  blue1
+  blue2
+  blue3
+  blue4
+  green1
+  green2
+  green3
+  green4
+  pink1
+  pink2
+  pink3
+  pink4
+  pink5
+  pink6
+  pink7
+  yellow1
+  yellow2
+  yellow3
+  yellow4
+  brown1
+  brown2
+  brown3
+  brown4
+  brown5
+  brown6
+  brown7
+  purple5
+  purple6
+  purple7
+  purple8
+  orange5
+  orange6
+  orange7
+  orange8
+  cyan5
+  cyan6
+  cyan7
+  cyan8
+  red8
+  red9
+  red10
+  red11
+  red12
+  blue5
+  blue6
+  blue7
+  green5
+  green6
+  green7
+  green8
+  pink8
+  brown8
+}
+
+enum HabitPeriodEnum {
+  anyTime
+  morning
+  evening
+  night
+}
+
+type Query {
+  getUser(id: String!): User!
+  getAllNotDeletedHabitsByUserId(id: String!): [Habit!]!
+  getHabitsByUserId(id: String!): [Habit!]!
+  getHabit(id: String!): Habit!
+  getAllNotDeletedTodoListByUserId(id: String!): [ToDoList!]!
+  getToDoList(id: String!): ToDoList!
+  getToDoTask(id: String!): ToDoTask!
+  getAllNotDeletedRoutinesByUserId(id: String!): [Routine!]!
+}
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, id: String!): User!
+  createHabit(data: HabitCreateInput!): Habit!
+  updateHabit(where: HabitWhereUniqueInput!, data: HabitUpdateInput!): Habit!
+  createToDoList(data: ToDoListCreateInput!): ToDoList!
+  deleteToDoList(id: String!): ToDoList!
+  updateToDoList(id: String!, data: ToDoListUpdateInput!): ToDoList!
+  updateToDoTask(id: String!, data: ToDoTaskUpdateInput!): ToDoTask!
+  createToDoTask(data: ToDoTaskCreateInput!): ToDoTask!
+  deleteToDoTask(id: String!): ToDoTask!
+  updateRoutine(id: String!, data: RoutineUpdateInput!): Routine!
+  createRoutine(data: RoutineCreateInput!): Routine!
+}
+
+input UserCreateInput {
+  id: String
+  name: String!
+  email: String!
+  age: Int!
+  birthdate: Timestamp!
+  coins: Int
+  bestStreak: Int
+  currentStreak: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  lastDailyReward: Timestamp
+  dailyRewardCount: Int
+  plants: UserCreateplantsInput
+  userSettings: UserSettingsCreateNestedOneWithoutUserInput!
+  routines: RoutineCreateNestedManyWithoutUserInput
+  habits: HabitCreateNestedManyWithoutUserInput
+  toDos: ToDoListCreateNestedManyWithoutUserInput
+}
+
+input UserCreateplantsInput {
+  set: [PlantEnum!]!
+}
+
+input UserSettingsCreateNestedOneWithoutUserInput {
+  create: UserSettingsCreateWithoutUserInput
+  connectOrCreate: UserSettingsCreateOrConnectWithoutUserInput
+  connect: UserSettingsWhereUniqueInput
+}
+
+input UserSettingsCreateWithoutUserInput {
+  id: String
+  isOnVacation: Boolean
+  isWithoutAlarms: Boolean
+  weekStartsOn: Int
+}
+
+input UserSettingsCreateOrConnectWithoutUserInput {
+  where: UserSettingsWhereUniqueInput!
+  create: UserSettingsCreateWithoutUserInput!
+}
+
+input UserSettingsWhereUniqueInput {
+  id: String
+}
+
+input RoutineCreateNestedManyWithoutUserInput {
+  create: [RoutineCreateWithoutUserInput!]
+  connectOrCreate: [RoutineCreateOrConnectWithoutUserInput!]
+  createMany: RoutineCreateManyUserInputEnvelope
+  connect: [RoutineWhereUniqueInput!]
+}
+
+input RoutineCreateWithoutUserInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  habits: HabitCreateNestedManyWithoutRoutineInput
+}
+
+input HabitCreateNestedManyWithoutRoutineInput {
+  create: [HabitCreateWithoutRoutineInput!]
+  connectOrCreate: [HabitCreateOrConnectWithoutRoutineInput!]
+  createMany: HabitCreateManyRoutineInputEnvelope
+  connect: [HabitWhereUniqueInput!]
+}
+
+input HabitCreateWithoutRoutineInput {
+  id: String
+  frequencyPerDay: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  title: String!
+  isPaused: Boolean
+  lastPlantReward: Timestamp
+  isDeleted: Boolean
+  color: HabitColorEnum
+  icon: HabitIconEnum!
+  period: HabitPeriodEnum
+  history: HabitHistoryDayCreateNestedManyWithoutHabitInput
+  timer: HabitTimerCreateNestedOneWithoutHabitInput!
+  User: UserCreateNestedOneWithoutHabitsInput
+  plant: HabitPlantCreateNestedOneWithoutHabitInput!
+  reminder: HabitReminderCreateNestedManyWithoutHabitInput
+  interval: HabitIntervalCreateNestedOneWithoutHabitInput!
+}
+
+input HabitHistoryDayCreateNestedManyWithoutHabitInput {
+  create: [HabitHistoryDayCreateWithoutHabitInput!]
+  connectOrCreate: [HabitHistoryDayCreateOrConnectWithoutHabitInput!]
+  createMany: HabitHistoryDayCreateManyHabitInputEnvelope
+  connect: [HabitHistoryDayWhereUniqueInput!]
+}
+
+input HabitHistoryDayCreateWithoutHabitInput {
+  id: String
+  date: Timestamp
+  frequencyOnThisDay: Int
+  doneTimes: Int
+  secondsPerFrequency: HabitHistoryDayCreatesecondsPerFrequencyInput
+}
+
+input HabitHistoryDayCreatesecondsPerFrequencyInput {
+  set: [Int!]!
+}
+
+input HabitHistoryDayCreateOrConnectWithoutHabitInput {
+  where: HabitHistoryDayWhereUniqueInput!
+  create: HabitHistoryDayCreateWithoutHabitInput!
+}
+
+input HabitHistoryDayWhereUniqueInput {
+  id: String
+  date: Timestamp
+}
+
+input HabitHistoryDayCreateManyHabitInputEnvelope {
+  data: [HabitHistoryDayCreateManyHabitInput!]!
+  skipDuplicates: Boolean
+}
+
+input HabitHistoryDayCreateManyHabitInput {
+  id: String
+  date: Timestamp
+  frequencyOnThisDay: Int
+  doneTimes: Int
+  secondsPerFrequency: HabitHistoryDayCreatesecondsPerFrequencyInput
+}
+
+input HabitTimerCreateNestedOneWithoutHabitInput {
+  create: HabitTimerCreateWithoutHabitInput
+  connectOrCreate: HabitTimerCreateOrConnectWithoutHabitInput
+  connect: HabitTimerWhereUniqueInput
+}
+
+input HabitTimerCreateWithoutHabitInput {
+  id: String
+  isActive: Boolean
+  time: Timestamp
+}
+
+input HabitTimerCreateOrConnectWithoutHabitInput {
+  where: HabitTimerWhereUniqueInput!
+  create: HabitTimerCreateWithoutHabitInput!
+}
+
+input HabitTimerWhereUniqueInput {
+  id: String
+}
+
+input UserCreateNestedOneWithoutHabitsInput {
+  create: UserCreateWithoutHabitsInput
+  connectOrCreate: UserCreateOrConnectWithoutHabitsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutHabitsInput {
+  id: String
+  name: String!
+  email: String!
+  age: Int!
+  birthdate: Timestamp!
+  coins: Int
+  bestStreak: Int
+  currentStreak: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  lastDailyReward: Timestamp
+  dailyRewardCount: Int
+  plants: UserCreateplantsInput
+  userSettings: UserSettingsCreateNestedOneWithoutUserInput!
+  routines: RoutineCreateNestedManyWithoutUserInput
+  toDos: ToDoListCreateNestedManyWithoutUserInput
+}
+
+input ToDoListCreateNestedManyWithoutUserInput {
+  create: [ToDoListCreateWithoutUserInput!]
+  connectOrCreate: [ToDoListCreateOrConnectWithoutUserInput!]
+  createMany: ToDoListCreateManyUserInputEnvelope
+  connect: [ToDoListWhereUniqueInput!]
+}
+
+input ToDoListCreateWithoutUserInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  tasks: ToDoTaskCreateNestedManyWithoutToDoListInput
+}
+
+input ToDoTaskCreateNestedManyWithoutToDoListInput {
+  create: [ToDoTaskCreateWithoutToDoListInput!]
+  connectOrCreate: [ToDoTaskCreateOrConnectWithoutToDoListInput!]
+  createMany: ToDoTaskCreateManyToDoListInputEnvelope
+  connect: [ToDoTaskWhereUniqueInput!]
+}
+
+input ToDoTaskCreateWithoutToDoListInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  lastDone: Timestamp
+  date: Timestamp!
+  frequenciesByRepeatType: Int
+  daysOfWeek: ToDoTaskCreatedaysOfWeekInput
+  repeatType: DateTimeRepeatEnum
+  subTasks: ToDoSubtaskCreateNestedManyWithoutToDoTaskInput
+}
+
+input ToDoTaskCreatedaysOfWeekInput {
+  set: [Int!]!
+}
+
+input ToDoSubtaskCreateNestedManyWithoutToDoTaskInput {
+  create: [ToDoSubtaskCreateWithoutToDoTaskInput!]
+  connectOrCreate: [ToDoSubtaskCreateOrConnectWithoutToDoTaskInput!]
+  createMany: ToDoSubtaskCreateManyToDoTaskInputEnvelope
+  connect: [ToDoSubtaskWhereUniqueInput!]
+}
+
+input ToDoSubtaskCreateWithoutToDoTaskInput {
+  id: String
+  title: String!
+  isDone: Boolean
+}
+
+input ToDoSubtaskCreateOrConnectWithoutToDoTaskInput {
+  where: ToDoSubtaskWhereUniqueInput!
+  create: ToDoSubtaskCreateWithoutToDoTaskInput!
+}
+
+input ToDoSubtaskWhereUniqueInput {
+  id: String
+  toDoTaskId: String
+}
+
+input ToDoSubtaskCreateManyToDoTaskInputEnvelope {
+  data: [ToDoSubtaskCreateManyToDoTaskInput!]!
+  skipDuplicates: Boolean
+}
+
+input ToDoSubtaskCreateManyToDoTaskInput {
+  id: String
+  title: String!
+  isDone: Boolean
+}
+
+input ToDoTaskCreateOrConnectWithoutToDoListInput {
+  where: ToDoTaskWhereUniqueInput!
+  create: ToDoTaskCreateWithoutToDoListInput!
+}
+
+input ToDoTaskWhereUniqueInput {
+  id: String
+  toDoListId: String
+}
+
+input ToDoTaskCreateManyToDoListInputEnvelope {
+  data: [ToDoTaskCreateManyToDoListInput!]!
+  skipDuplicates: Boolean
+}
+
+input ToDoTaskCreateManyToDoListInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  lastDone: Timestamp
+  date: Timestamp!
+  frequenciesByRepeatType: Int
+  daysOfWeek: ToDoTaskCreatedaysOfWeekInput
+  repeatType: DateTimeRepeatEnum
+}
+
+input ToDoListCreateOrConnectWithoutUserInput {
+  where: ToDoListWhereUniqueInput!
+  create: ToDoListCreateWithoutUserInput!
+}
+
+input ToDoListWhereUniqueInput {
+  id: String
+}
+
+input ToDoListCreateManyUserInputEnvelope {
+  data: [ToDoListCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input ToDoListCreateManyUserInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+}
+
+input UserCreateOrConnectWithoutHabitsInput {
+  where: UserWhereUniqueInput!
+  create: UserCreateWithoutHabitsInput!
+}
+
+input UserWhereUniqueInput {
+  id: String
+  email: String
+  userSettingsId: String
+}
+
+input HabitPlantCreateNestedOneWithoutHabitInput {
+  create: HabitPlantCreateWithoutHabitInput
+  connectOrCreate: HabitPlantCreateOrConnectWithoutHabitInput
+  connect: HabitPlantWhereUniqueInput
+}
+
+input HabitPlantCreateWithoutHabitInput {
+  id: String
+  positionBot: Int!
+  positionLeft: Int!
+  plant: PlantEnum
+}
+
+input HabitPlantCreateOrConnectWithoutHabitInput {
+  where: HabitPlantWhereUniqueInput!
+  create: HabitPlantCreateWithoutHabitInput!
+}
+
+input HabitPlantWhereUniqueInput {
+  id: String
+}
+
+input HabitReminderCreateNestedManyWithoutHabitInput {
+  create: [HabitReminderCreateWithoutHabitInput!]
+  connectOrCreate: [HabitReminderCreateOrConnectWithoutHabitInput!]
+  createMany: HabitReminderCreateManyHabitInputEnvelope
+  connect: [HabitReminderWhereUniqueInput!]
+}
+
+input HabitReminderCreateWithoutHabitInput {
+  id: String
+  date: Timestamp!
+  isAlarm: Boolean
+}
+
+input HabitReminderCreateOrConnectWithoutHabitInput {
+  where: HabitReminderWhereUniqueInput!
+  create: HabitReminderCreateWithoutHabitInput!
+}
+
+input HabitReminderWhereUniqueInput {
+  id: String
+}
+
+input HabitReminderCreateManyHabitInputEnvelope {
+  data: [HabitReminderCreateManyHabitInput!]!
+  skipDuplicates: Boolean
+}
+
+input HabitReminderCreateManyHabitInput {
+  id: String
+  date: Timestamp!
+  isAlarm: Boolean
+}
+
+input HabitIntervalCreateNestedOneWithoutHabitInput {
+  create: HabitIntervalCreateWithoutHabitInput
+  connectOrCreate: HabitIntervalCreateOrConnectWithoutHabitInput
+  connect: HabitIntervalWhereUniqueInput
+}
+
+input HabitIntervalCreateWithoutHabitInput {
+  id: String
+  timesPerWeek: Int!
+  daysOfWeek: HabitIntervalCreatedaysOfWeekInput
+  type: HabitIntervalTypeEnum
+}
+
+input HabitIntervalCreatedaysOfWeekInput {
+  set: [Int!]!
+}
+
+input HabitIntervalCreateOrConnectWithoutHabitInput {
+  where: HabitIntervalWhereUniqueInput!
+  create: HabitIntervalCreateWithoutHabitInput!
+}
+
+input HabitIntervalWhereUniqueInput {
+  id: String
+}
+
+input HabitCreateOrConnectWithoutRoutineInput {
+  where: HabitWhereUniqueInput!
+  create: HabitCreateWithoutRoutineInput!
+}
+
+input HabitWhereUniqueInput {
+  id: String
+  habitPlantId: String
+  habitTimerId: String
+  habitIntervalId: String
+}
+
+input HabitCreateManyRoutineInputEnvelope {
+  data: [HabitCreateManyRoutineInput!]!
+  skipDuplicates: Boolean
+}
+
+input HabitCreateManyRoutineInput {
+  id: String
+  userId: String
+  frequencyPerDay: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  title: String!
+  isPaused: Boolean
+  lastPlantReward: Timestamp
+  isDeleted: Boolean
+  habitPlantId: String!
+  habitTimerId: String!
+  habitIntervalId: String!
+  color: HabitColorEnum
+  icon: HabitIconEnum!
+  period: HabitPeriodEnum
+}
+
+input RoutineCreateOrConnectWithoutUserInput {
+  where: RoutineWhereUniqueInput!
+  create: RoutineCreateWithoutUserInput!
+}
+
+input RoutineWhereUniqueInput {
+  id: String
+}
+
+input RoutineCreateManyUserInputEnvelope {
+  data: [RoutineCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input RoutineCreateManyUserInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+}
+
+input HabitCreateNestedManyWithoutUserInput {
+  create: [HabitCreateWithoutUserInput!]
+  connectOrCreate: [HabitCreateOrConnectWithoutUserInput!]
+  createMany: HabitCreateManyUserInputEnvelope
+  connect: [HabitWhereUniqueInput!]
+}
+
+input HabitCreateWithoutUserInput {
+  id: String
+  frequencyPerDay: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  title: String!
+  isPaused: Boolean
+  lastPlantReward: Timestamp
+  isDeleted: Boolean
+  color: HabitColorEnum
+  icon: HabitIconEnum!
+  period: HabitPeriodEnum
+  history: HabitHistoryDayCreateNestedManyWithoutHabitInput
+  timer: HabitTimerCreateNestedOneWithoutHabitInput!
+  Routine: RoutineCreateNestedOneWithoutHabitsInput
+  plant: HabitPlantCreateNestedOneWithoutHabitInput!
+  reminder: HabitReminderCreateNestedManyWithoutHabitInput
+  interval: HabitIntervalCreateNestedOneWithoutHabitInput!
+}
+
+input RoutineCreateNestedOneWithoutHabitsInput {
+  create: RoutineCreateWithoutHabitsInput
+  connectOrCreate: RoutineCreateOrConnectWithoutHabitsInput
+  connect: RoutineWhereUniqueInput
+}
+
+input RoutineCreateWithoutHabitsInput {
+  id: String
+  User: UserCreateNestedOneWithoutRoutinesInput
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+}
+
+input UserCreateNestedOneWithoutRoutinesInput {
+  create: UserCreateWithoutRoutinesInput
+  connectOrCreate: UserCreateOrConnectWithoutRoutinesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutRoutinesInput {
+  id: String
+  name: String!
+  email: String!
+  age: Int!
+  birthdate: Timestamp!
+  coins: Int
+  bestStreak: Int
+  currentStreak: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  lastDailyReward: Timestamp
+  dailyRewardCount: Int
+  plants: UserCreateplantsInput
+  userSettings: UserSettingsCreateNestedOneWithoutUserInput!
+  habits: HabitCreateNestedManyWithoutUserInput
+  toDos: ToDoListCreateNestedManyWithoutUserInput
+}
+
+input UserCreateOrConnectWithoutRoutinesInput {
+  where: UserWhereUniqueInput!
+  create: UserCreateWithoutRoutinesInput!
+}
+
+input RoutineCreateOrConnectWithoutHabitsInput {
+  where: RoutineWhereUniqueInput!
+  create: RoutineCreateWithoutHabitsInput!
+}
+
+input HabitCreateOrConnectWithoutUserInput {
+  where: HabitWhereUniqueInput!
+  create: HabitCreateWithoutUserInput!
+}
+
+input HabitCreateManyUserInputEnvelope {
+  data: [HabitCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input HabitCreateManyUserInput {
+  id: String
+  routineId: String
+  frequencyPerDay: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  title: String!
+  isPaused: Boolean
+  lastPlantReward: Timestamp
+  isDeleted: Boolean
+  habitPlantId: String!
+  habitTimerId: String!
+  habitIntervalId: String!
+  color: HabitColorEnum
+  icon: HabitIconEnum!
+  period: HabitPeriodEnum
+}
+
+input UserUpdateInput {
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  age: IntFieldUpdateOperationsInput
+  birthdate: DateTimeFieldUpdateOperationsInput
+  coins: IntFieldUpdateOperationsInput
+  bestStreak: IntFieldUpdateOperationsInput
+  currentStreak: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  lastDailyReward: DateTimeFieldUpdateOperationsInput
+  dailyRewardCount: IntFieldUpdateOperationsInput
+  plants: UserUpdateplantsInput
+  userSettings: UserSettingsUpdateOneRequiredWithoutUserNestedInput
+  routines: RoutineUpdateManyWithoutUserNestedInput
+  habits: HabitUpdateManyWithoutUserNestedInput
+  toDos: ToDoListUpdateManyWithoutUserNestedInput
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input IntFieldUpdateOperationsInput {
+  set: Int
+  increment: Int
+  decrement: Int
+  multiply: Int
+  divide: Int
+}
+
+input DateTimeFieldUpdateOperationsInput {
+  set: Timestamp
+}
+
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input UserUpdateplantsInput {
+  set: [PlantEnum!]
+  push: [PlantEnum!]
+}
+
+input UserSettingsUpdateOneRequiredWithoutUserNestedInput {
+  create: UserSettingsCreateWithoutUserInput
+  connectOrCreate: UserSettingsCreateOrConnectWithoutUserInput
+  upsert: UserSettingsUpsertWithoutUserInput
+  connect: UserSettingsWhereUniqueInput
+  update: UserSettingsUpdateWithoutUserInput
+}
+
+input UserSettingsUpsertWithoutUserInput {
+  update: UserSettingsUpdateWithoutUserInput!
+  create: UserSettingsCreateWithoutUserInput!
+}
+
+input UserSettingsUpdateWithoutUserInput {
+  id: StringFieldUpdateOperationsInput
+  isOnVacation: BoolFieldUpdateOperationsInput
+  isWithoutAlarms: BoolFieldUpdateOperationsInput
+  weekStartsOn: IntFieldUpdateOperationsInput
+}
+
+input RoutineUpdateManyWithoutUserNestedInput {
+  create: [RoutineCreateWithoutUserInput!]
+  connectOrCreate: [RoutineCreateOrConnectWithoutUserInput!]
+  upsert: [RoutineUpsertWithWhereUniqueWithoutUserInput!]
+  createMany: RoutineCreateManyUserInputEnvelope
+  set: [RoutineWhereUniqueInput!]
+  disconnect: [RoutineWhereUniqueInput!]
+  delete: [RoutineWhereUniqueInput!]
+  connect: [RoutineWhereUniqueInput!]
+  update: [RoutineUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [RoutineUpdateManyWithWhereWithoutUserInput!]
+  deleteMany: [RoutineScalarWhereInput!]
+}
+
+input RoutineUpsertWithWhereUniqueWithoutUserInput {
+  where: RoutineWhereUniqueInput!
+  update: RoutineUpdateWithoutUserInput!
+  create: RoutineCreateWithoutUserInput!
+}
+
+input RoutineUpdateWithoutUserInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  habits: HabitUpdateManyWithoutRoutineNestedInput
+}
+
+input HabitUpdateManyWithoutRoutineNestedInput {
+  create: [HabitCreateWithoutRoutineInput!]
+  connectOrCreate: [HabitCreateOrConnectWithoutRoutineInput!]
+  upsert: [HabitUpsertWithWhereUniqueWithoutRoutineInput!]
+  createMany: HabitCreateManyRoutineInputEnvelope
+  set: [HabitWhereUniqueInput!]
+  disconnect: [HabitWhereUniqueInput!]
+  delete: [HabitWhereUniqueInput!]
+  connect: [HabitWhereUniqueInput!]
+  update: [HabitUpdateWithWhereUniqueWithoutRoutineInput!]
+  updateMany: [HabitUpdateManyWithWhereWithoutRoutineInput!]
+  deleteMany: [HabitScalarWhereInput!]
+}
+
+input HabitUpsertWithWhereUniqueWithoutRoutineInput {
+  where: HabitWhereUniqueInput!
+  update: HabitUpdateWithoutRoutineInput!
+  create: HabitCreateWithoutRoutineInput!
+}
+
+input HabitUpdateWithoutRoutineInput {
+  id: StringFieldUpdateOperationsInput
+  frequencyPerDay: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  isPaused: BoolFieldUpdateOperationsInput
+  lastPlantReward: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  color: EnumHabitColorEnumFieldUpdateOperationsInput
+  icon: EnumHabitIconEnumFieldUpdateOperationsInput
+  period: EnumHabitPeriodEnumFieldUpdateOperationsInput
+  history: HabitHistoryDayUpdateManyWithoutHabitNestedInput
+  timer: HabitTimerUpdateOneRequiredWithoutHabitNestedInput
+  User: UserUpdateOneWithoutHabitsNestedInput
+  plant: HabitPlantUpdateOneRequiredWithoutHabitNestedInput
+  reminder: HabitReminderUpdateManyWithoutHabitNestedInput
+  interval: HabitIntervalUpdateOneRequiredWithoutHabitNestedInput
+}
+
+input EnumHabitColorEnumFieldUpdateOperationsInput {
+  set: HabitColorEnum
+}
+
+input EnumHabitIconEnumFieldUpdateOperationsInput {
+  set: HabitIconEnum
+}
+
+input EnumHabitPeriodEnumFieldUpdateOperationsInput {
+  set: HabitPeriodEnum
+}
+
+input HabitHistoryDayUpdateManyWithoutHabitNestedInput {
+  create: [HabitHistoryDayCreateWithoutHabitInput!]
+  connectOrCreate: [HabitHistoryDayCreateOrConnectWithoutHabitInput!]
+  upsert: [HabitHistoryDayUpsertWithWhereUniqueWithoutHabitInput!]
+  createMany: HabitHistoryDayCreateManyHabitInputEnvelope
+  set: [HabitHistoryDayWhereUniqueInput!]
+  disconnect: [HabitHistoryDayWhereUniqueInput!]
+  delete: [HabitHistoryDayWhereUniqueInput!]
+  connect: [HabitHistoryDayWhereUniqueInput!]
+  update: [HabitHistoryDayUpdateWithWhereUniqueWithoutHabitInput!]
+  updateMany: [HabitHistoryDayUpdateManyWithWhereWithoutHabitInput!]
+  deleteMany: [HabitHistoryDayScalarWhereInput!]
+}
+
+input HabitHistoryDayUpsertWithWhereUniqueWithoutHabitInput {
+  where: HabitHistoryDayWhereUniqueInput!
+  update: HabitHistoryDayUpdateWithoutHabitInput!
+  create: HabitHistoryDayCreateWithoutHabitInput!
+}
+
+input HabitHistoryDayUpdateWithoutHabitInput {
+  id: StringFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  frequencyOnThisDay: IntFieldUpdateOperationsInput
+  doneTimes: IntFieldUpdateOperationsInput
+  secondsPerFrequency: HabitHistoryDayUpdatesecondsPerFrequencyInput
+}
+
+input HabitHistoryDayUpdatesecondsPerFrequencyInput {
+  set: [Int!]
+  push: [Int!]
+}
+
+input HabitHistoryDayUpdateWithWhereUniqueWithoutHabitInput {
+  where: HabitHistoryDayWhereUniqueInput!
+  data: HabitHistoryDayUpdateWithoutHabitInput!
+}
+
+input HabitHistoryDayUpdateManyWithWhereWithoutHabitInput {
+  where: HabitHistoryDayScalarWhereInput!
+  data: HabitHistoryDayUpdateManyMutationInput!
+}
+
+input HabitHistoryDayScalarWhereInput {
+  AND: [HabitHistoryDayScalarWhereInput!]
+  OR: [HabitHistoryDayScalarWhereInput!]
+  NOT: [HabitHistoryDayScalarWhereInput!]
+  id: StringFilter
+  habitId: StringFilter
+  date: DateTimeFilter
+  frequencyOnThisDay: IntFilter
+  doneTimes: IntFilter
+  secondsPerFrequency: IntNullableListFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input DateTimeFilter {
+  equals: Timestamp
+  in: [Timestamp!]
+  notIn: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  not: NestedDateTimeFilter
+}
+
+input NestedDateTimeFilter {
+  equals: Timestamp
+  in: [Timestamp!]
+  notIn: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  not: NestedDateTimeFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input IntNullableListFilter {
+  equals: [Int!]
+  has: Int
+  hasEvery: [Int!]
+  hasSome: [Int!]
+  isEmpty: Boolean
+}
+
+input HabitHistoryDayUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  frequencyOnThisDay: IntFieldUpdateOperationsInput
+  doneTimes: IntFieldUpdateOperationsInput
+  secondsPerFrequency: HabitHistoryDayUpdatesecondsPerFrequencyInput
+}
+
+input HabitTimerUpdateOneRequiredWithoutHabitNestedInput {
+  create: HabitTimerCreateWithoutHabitInput
+  connectOrCreate: HabitTimerCreateOrConnectWithoutHabitInput
+  upsert: HabitTimerUpsertWithoutHabitInput
+  connect: HabitTimerWhereUniqueInput
+  update: HabitTimerUpdateWithoutHabitInput
+}
+
+input HabitTimerUpsertWithoutHabitInput {
+  update: HabitTimerUpdateWithoutHabitInput!
+  create: HabitTimerCreateWithoutHabitInput!
+}
+
+input HabitTimerUpdateWithoutHabitInput {
+  id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
+  time: DateTimeFieldUpdateOperationsInput
+}
+
+input UserUpdateOneWithoutHabitsNestedInput {
+  create: UserCreateWithoutHabitsInput
+  connectOrCreate: UserCreateOrConnectWithoutHabitsInput
+  upsert: UserUpsertWithoutHabitsInput
+  disconnect: Boolean
+  delete: Boolean
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutHabitsInput
+}
+
+input UserUpsertWithoutHabitsInput {
+  update: UserUpdateWithoutHabitsInput!
+  create: UserCreateWithoutHabitsInput!
+}
+
+input UserUpdateWithoutHabitsInput {
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  age: IntFieldUpdateOperationsInput
+  birthdate: DateTimeFieldUpdateOperationsInput
+  coins: IntFieldUpdateOperationsInput
+  bestStreak: IntFieldUpdateOperationsInput
+  currentStreak: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  lastDailyReward: DateTimeFieldUpdateOperationsInput
+  dailyRewardCount: IntFieldUpdateOperationsInput
+  plants: UserUpdateplantsInput
+  userSettings: UserSettingsUpdateOneRequiredWithoutUserNestedInput
+  routines: RoutineUpdateManyWithoutUserNestedInput
+  toDos: ToDoListUpdateManyWithoutUserNestedInput
+}
+
+input ToDoListUpdateManyWithoutUserNestedInput {
+  create: [ToDoListCreateWithoutUserInput!]
+  connectOrCreate: [ToDoListCreateOrConnectWithoutUserInput!]
+  upsert: [ToDoListUpsertWithWhereUniqueWithoutUserInput!]
+  createMany: ToDoListCreateManyUserInputEnvelope
+  set: [ToDoListWhereUniqueInput!]
+  disconnect: [ToDoListWhereUniqueInput!]
+  delete: [ToDoListWhereUniqueInput!]
+  connect: [ToDoListWhereUniqueInput!]
+  update: [ToDoListUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ToDoListUpdateManyWithWhereWithoutUserInput!]
+  deleteMany: [ToDoListScalarWhereInput!]
+}
+
+input ToDoListUpsertWithWhereUniqueWithoutUserInput {
+  where: ToDoListWhereUniqueInput!
+  update: ToDoListUpdateWithoutUserInput!
+  create: ToDoListCreateWithoutUserInput!
+}
+
+input ToDoListUpdateWithoutUserInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  tasks: ToDoTaskUpdateManyWithoutToDoListNestedInput
+}
+
+input ToDoTaskUpdateManyWithoutToDoListNestedInput {
+  create: [ToDoTaskCreateWithoutToDoListInput!]
+  connectOrCreate: [ToDoTaskCreateOrConnectWithoutToDoListInput!]
+  upsert: [ToDoTaskUpsertWithWhereUniqueWithoutToDoListInput!]
+  createMany: ToDoTaskCreateManyToDoListInputEnvelope
+  set: [ToDoTaskWhereUniqueInput!]
+  disconnect: [ToDoTaskWhereUniqueInput!]
+  delete: [ToDoTaskWhereUniqueInput!]
+  connect: [ToDoTaskWhereUniqueInput!]
+  update: [ToDoTaskUpdateWithWhereUniqueWithoutToDoListInput!]
+  updateMany: [ToDoTaskUpdateManyWithWhereWithoutToDoListInput!]
+  deleteMany: [ToDoTaskScalarWhereInput!]
+}
+
+input ToDoTaskUpsertWithWhereUniqueWithoutToDoListInput {
+  where: ToDoTaskWhereUniqueInput!
+  update: ToDoTaskUpdateWithoutToDoListInput!
+  create: ToDoTaskCreateWithoutToDoListInput!
+}
+
+input ToDoTaskUpdateWithoutToDoListInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  lastDone: NullableDateTimeFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  frequenciesByRepeatType: IntFieldUpdateOperationsInput
+  daysOfWeek: ToDoTaskUpdatedaysOfWeekInput
+  repeatType: EnumDateTimeRepeatEnumFieldUpdateOperationsInput
+  subTasks: ToDoSubtaskUpdateManyWithoutToDoTaskNestedInput
+}
+
+input NullableDateTimeFieldUpdateOperationsInput {
+  set: Timestamp
+}
+
+input ToDoTaskUpdatedaysOfWeekInput {
+  set: [Int!]
+  push: [Int!]
+}
+
+input EnumDateTimeRepeatEnumFieldUpdateOperationsInput {
+  set: DateTimeRepeatEnum
+}
+
+input ToDoSubtaskUpdateManyWithoutToDoTaskNestedInput {
+  create: [ToDoSubtaskCreateWithoutToDoTaskInput!]
+  connectOrCreate: [ToDoSubtaskCreateOrConnectWithoutToDoTaskInput!]
+  upsert: [ToDoSubtaskUpsertWithWhereUniqueWithoutToDoTaskInput!]
+  createMany: ToDoSubtaskCreateManyToDoTaskInputEnvelope
+  set: [ToDoSubtaskWhereUniqueInput!]
+  disconnect: [ToDoSubtaskWhereUniqueInput!]
+  delete: [ToDoSubtaskWhereUniqueInput!]
+  connect: [ToDoSubtaskWhereUniqueInput!]
+  update: [ToDoSubtaskUpdateWithWhereUniqueWithoutToDoTaskInput!]
+  updateMany: [ToDoSubtaskUpdateManyWithWhereWithoutToDoTaskInput!]
+  deleteMany: [ToDoSubtaskScalarWhereInput!]
+}
+
+input ToDoSubtaskUpsertWithWhereUniqueWithoutToDoTaskInput {
+  where: ToDoSubtaskWhereUniqueInput!
+  update: ToDoSubtaskUpdateWithoutToDoTaskInput!
+  create: ToDoSubtaskCreateWithoutToDoTaskInput!
+}
+
+input ToDoSubtaskUpdateWithoutToDoTaskInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  isDone: BoolFieldUpdateOperationsInput
+}
+
+input ToDoSubtaskUpdateWithWhereUniqueWithoutToDoTaskInput {
+  where: ToDoSubtaskWhereUniqueInput!
+  data: ToDoSubtaskUpdateWithoutToDoTaskInput!
+}
+
+input ToDoSubtaskUpdateManyWithWhereWithoutToDoTaskInput {
+  where: ToDoSubtaskScalarWhereInput!
+  data: ToDoSubtaskUpdateManyMutationInput!
+}
+
+input ToDoSubtaskScalarWhereInput {
+  AND: [ToDoSubtaskScalarWhereInput!]
+  OR: [ToDoSubtaskScalarWhereInput!]
+  NOT: [ToDoSubtaskScalarWhereInput!]
+  id: StringFilter
+  toDoTaskId: StringFilter
+  title: StringFilter
+  isDone: BoolFilter
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input ToDoSubtaskUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  isDone: BoolFieldUpdateOperationsInput
+}
+
+input ToDoTaskUpdateWithWhereUniqueWithoutToDoListInput {
+  where: ToDoTaskWhereUniqueInput!
+  data: ToDoTaskUpdateWithoutToDoListInput!
+}
+
+input ToDoTaskUpdateManyWithWhereWithoutToDoListInput {
+  where: ToDoTaskScalarWhereInput!
+  data: ToDoTaskUpdateManyMutationInput!
+}
+
+input ToDoTaskScalarWhereInput {
+  AND: [ToDoTaskScalarWhereInput!]
+  OR: [ToDoTaskScalarWhereInput!]
+  NOT: [ToDoTaskScalarWhereInput!]
+  id: StringFilter
+  toDoListId: StringFilter
+  title: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  lastDone: DateTimeNullableFilter
+  date: DateTimeFilter
+  frequenciesByRepeatType: IntFilter
+  daysOfWeek: IntNullableListFilter
+  repeatType: EnumDateTimeRepeatEnumFilter
+}
+
+input DateTimeNullableFilter {
+  equals: Timestamp
+  in: [Timestamp!]
+  notIn: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  not: NestedDateTimeNullableFilter
+}
+
+input NestedDateTimeNullableFilter {
+  equals: Timestamp
+  in: [Timestamp!]
+  notIn: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  not: NestedDateTimeNullableFilter
+}
+
+input EnumDateTimeRepeatEnumFilter {
+  equals: DateTimeRepeatEnum
+  in: [DateTimeRepeatEnum!]
+  notIn: [DateTimeRepeatEnum!]
+  not: NestedEnumDateTimeRepeatEnumFilter
+}
+
+input NestedEnumDateTimeRepeatEnumFilter {
+  equals: DateTimeRepeatEnum
+  in: [DateTimeRepeatEnum!]
+  notIn: [DateTimeRepeatEnum!]
+  not: NestedEnumDateTimeRepeatEnumFilter
+}
+
+input ToDoTaskUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  lastDone: NullableDateTimeFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  frequenciesByRepeatType: IntFieldUpdateOperationsInput
+  daysOfWeek: ToDoTaskUpdatedaysOfWeekInput
+  repeatType: EnumDateTimeRepeatEnumFieldUpdateOperationsInput
+}
+
+input ToDoListUpdateWithWhereUniqueWithoutUserInput {
+  where: ToDoListWhereUniqueInput!
+  data: ToDoListUpdateWithoutUserInput!
+}
+
+input ToDoListUpdateManyWithWhereWithoutUserInput {
+  where: ToDoListScalarWhereInput!
+  data: ToDoListUpdateManyMutationInput!
+}
+
+input ToDoListScalarWhereInput {
+  AND: [ToDoListScalarWhereInput!]
+  OR: [ToDoListScalarWhereInput!]
+  NOT: [ToDoListScalarWhereInput!]
+  id: StringFilter
+  title: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  isDeleted: BoolFilter
+  userId: StringNullableFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input ToDoListUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+}
+
+input HabitPlantUpdateOneRequiredWithoutHabitNestedInput {
+  create: HabitPlantCreateWithoutHabitInput
+  connectOrCreate: HabitPlantCreateOrConnectWithoutHabitInput
+  upsert: HabitPlantUpsertWithoutHabitInput
+  connect: HabitPlantWhereUniqueInput
+  update: HabitPlantUpdateWithoutHabitInput
+}
+
+input HabitPlantUpsertWithoutHabitInput {
+  update: HabitPlantUpdateWithoutHabitInput!
+  create: HabitPlantCreateWithoutHabitInput!
+}
+
+input HabitPlantUpdateWithoutHabitInput {
+  id: StringFieldUpdateOperationsInput
+  positionBot: IntFieldUpdateOperationsInput
+  positionLeft: IntFieldUpdateOperationsInput
+  plant: EnumPlantEnumFieldUpdateOperationsInput
+}
+
+input EnumPlantEnumFieldUpdateOperationsInput {
+  set: PlantEnum
+}
+
+input HabitReminderUpdateManyWithoutHabitNestedInput {
+  create: [HabitReminderCreateWithoutHabitInput!]
+  connectOrCreate: [HabitReminderCreateOrConnectWithoutHabitInput!]
+  upsert: [HabitReminderUpsertWithWhereUniqueWithoutHabitInput!]
+  createMany: HabitReminderCreateManyHabitInputEnvelope
+  set: [HabitReminderWhereUniqueInput!]
+  disconnect: [HabitReminderWhereUniqueInput!]
+  delete: [HabitReminderWhereUniqueInput!]
+  connect: [HabitReminderWhereUniqueInput!]
+  update: [HabitReminderUpdateWithWhereUniqueWithoutHabitInput!]
+  updateMany: [HabitReminderUpdateManyWithWhereWithoutHabitInput!]
+  deleteMany: [HabitReminderScalarWhereInput!]
+}
+
+input HabitReminderUpsertWithWhereUniqueWithoutHabitInput {
+  where: HabitReminderWhereUniqueInput!
+  update: HabitReminderUpdateWithoutHabitInput!
+  create: HabitReminderCreateWithoutHabitInput!
+}
+
+input HabitReminderUpdateWithoutHabitInput {
+  id: StringFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  isAlarm: BoolFieldUpdateOperationsInput
+}
+
+input HabitReminderUpdateWithWhereUniqueWithoutHabitInput {
+  where: HabitReminderWhereUniqueInput!
+  data: HabitReminderUpdateWithoutHabitInput!
+}
+
+input HabitReminderUpdateManyWithWhereWithoutHabitInput {
+  where: HabitReminderScalarWhereInput!
+  data: HabitReminderUpdateManyMutationInput!
+}
+
+input HabitReminderScalarWhereInput {
+  AND: [HabitReminderScalarWhereInput!]
+  OR: [HabitReminderScalarWhereInput!]
+  NOT: [HabitReminderScalarWhereInput!]
+  id: StringFilter
+  habitId: StringFilter
+  date: DateTimeFilter
+  isAlarm: BoolFilter
+}
+
+input HabitReminderUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  isAlarm: BoolFieldUpdateOperationsInput
+}
+
+input HabitIntervalUpdateOneRequiredWithoutHabitNestedInput {
+  create: HabitIntervalCreateWithoutHabitInput
+  connectOrCreate: HabitIntervalCreateOrConnectWithoutHabitInput
+  upsert: HabitIntervalUpsertWithoutHabitInput
+  connect: HabitIntervalWhereUniqueInput
+  update: HabitIntervalUpdateWithoutHabitInput
+}
+
+input HabitIntervalUpsertWithoutHabitInput {
+  update: HabitIntervalUpdateWithoutHabitInput!
+  create: HabitIntervalCreateWithoutHabitInput!
+}
+
+input HabitIntervalUpdateWithoutHabitInput {
+  id: StringFieldUpdateOperationsInput
+  timesPerWeek: IntFieldUpdateOperationsInput
+  daysOfWeek: HabitIntervalUpdatedaysOfWeekInput
+  type: EnumHabitIntervalTypeEnumFieldUpdateOperationsInput
+}
+
+input HabitIntervalUpdatedaysOfWeekInput {
+  set: [Int!]
+  push: [Int!]
+}
+
+input EnumHabitIntervalTypeEnumFieldUpdateOperationsInput {
+  set: HabitIntervalTypeEnum
+}
+
+input HabitUpdateWithWhereUniqueWithoutRoutineInput {
+  where: HabitWhereUniqueInput!
+  data: HabitUpdateWithoutRoutineInput!
+}
+
+input HabitUpdateManyWithWhereWithoutRoutineInput {
+  where: HabitScalarWhereInput!
+  data: HabitUpdateManyMutationInput!
+}
+
+input HabitScalarWhereInput {
+  AND: [HabitScalarWhereInput!]
+  OR: [HabitScalarWhereInput!]
+  NOT: [HabitScalarWhereInput!]
+  id: StringFilter
+  routineId: StringNullableFilter
+  userId: StringNullableFilter
+  frequencyPerDay: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  title: StringFilter
+  isPaused: BoolFilter
+  lastPlantReward: DateTimeFilter
+  isDeleted: BoolFilter
+  habitPlantId: StringFilter
+  habitTimerId: StringFilter
+  habitIntervalId: StringFilter
+  color: EnumHabitColorEnumFilter
+  icon: EnumHabitIconEnumFilter
+  period: EnumHabitPeriodEnumFilter
+}
+
+input EnumHabitColorEnumFilter {
+  equals: HabitColorEnum
+  in: [HabitColorEnum!]
+  notIn: [HabitColorEnum!]
+  not: NestedEnumHabitColorEnumFilter
+}
+
+input NestedEnumHabitColorEnumFilter {
+  equals: HabitColorEnum
+  in: [HabitColorEnum!]
+  notIn: [HabitColorEnum!]
+  not: NestedEnumHabitColorEnumFilter
+}
+
+input EnumHabitIconEnumFilter {
+  equals: HabitIconEnum
+  in: [HabitIconEnum!]
+  notIn: [HabitIconEnum!]
+  not: NestedEnumHabitIconEnumFilter
+}
+
+input NestedEnumHabitIconEnumFilter {
+  equals: HabitIconEnum
+  in: [HabitIconEnum!]
+  notIn: [HabitIconEnum!]
+  not: NestedEnumHabitIconEnumFilter
+}
+
+input EnumHabitPeriodEnumFilter {
+  equals: HabitPeriodEnum
+  in: [HabitPeriodEnum!]
+  notIn: [HabitPeriodEnum!]
+  not: NestedEnumHabitPeriodEnumFilter
+}
+
+input NestedEnumHabitPeriodEnumFilter {
+  equals: HabitPeriodEnum
+  in: [HabitPeriodEnum!]
+  notIn: [HabitPeriodEnum!]
+  not: NestedEnumHabitPeriodEnumFilter
+}
+
+input HabitUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  frequencyPerDay: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  isPaused: BoolFieldUpdateOperationsInput
+  lastPlantReward: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  color: EnumHabitColorEnumFieldUpdateOperationsInput
+  icon: EnumHabitIconEnumFieldUpdateOperationsInput
+  period: EnumHabitPeriodEnumFieldUpdateOperationsInput
+}
+
+input RoutineUpdateWithWhereUniqueWithoutUserInput {
+  where: RoutineWhereUniqueInput!
+  data: RoutineUpdateWithoutUserInput!
+}
+
+input RoutineUpdateManyWithWhereWithoutUserInput {
+  where: RoutineScalarWhereInput!
+  data: RoutineUpdateManyMutationInput!
+}
+
+input RoutineScalarWhereInput {
+  AND: [RoutineScalarWhereInput!]
+  OR: [RoutineScalarWhereInput!]
+  NOT: [RoutineScalarWhereInput!]
+  id: StringFilter
+  userId: StringNullableFilter
+  title: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  isDeleted: BoolFilter
+}
+
+input RoutineUpdateManyMutationInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+}
+
+input HabitUpdateManyWithoutUserNestedInput {
+  create: [HabitCreateWithoutUserInput!]
+  connectOrCreate: [HabitCreateOrConnectWithoutUserInput!]
+  upsert: [HabitUpsertWithWhereUniqueWithoutUserInput!]
+  createMany: HabitCreateManyUserInputEnvelope
+  set: [HabitWhereUniqueInput!]
+  disconnect: [HabitWhereUniqueInput!]
+  delete: [HabitWhereUniqueInput!]
+  connect: [HabitWhereUniqueInput!]
+  update: [HabitUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [HabitUpdateManyWithWhereWithoutUserInput!]
+  deleteMany: [HabitScalarWhereInput!]
+}
+
+input HabitUpsertWithWhereUniqueWithoutUserInput {
+  where: HabitWhereUniqueInput!
+  update: HabitUpdateWithoutUserInput!
+  create: HabitCreateWithoutUserInput!
+}
+
+input HabitUpdateWithoutUserInput {
+  id: StringFieldUpdateOperationsInput
+  frequencyPerDay: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  isPaused: BoolFieldUpdateOperationsInput
+  lastPlantReward: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  color: EnumHabitColorEnumFieldUpdateOperationsInput
+  icon: EnumHabitIconEnumFieldUpdateOperationsInput
+  period: EnumHabitPeriodEnumFieldUpdateOperationsInput
+  history: HabitHistoryDayUpdateManyWithoutHabitNestedInput
+  timer: HabitTimerUpdateOneRequiredWithoutHabitNestedInput
+  Routine: RoutineUpdateOneWithoutHabitsNestedInput
+  plant: HabitPlantUpdateOneRequiredWithoutHabitNestedInput
+  reminder: HabitReminderUpdateManyWithoutHabitNestedInput
+  interval: HabitIntervalUpdateOneRequiredWithoutHabitNestedInput
+}
+
+input RoutineUpdateOneWithoutHabitsNestedInput {
+  create: RoutineCreateWithoutHabitsInput
+  connectOrCreate: RoutineCreateOrConnectWithoutHabitsInput
+  upsert: RoutineUpsertWithoutHabitsInput
+  disconnect: Boolean
+  delete: Boolean
+  connect: RoutineWhereUniqueInput
+  update: RoutineUpdateWithoutHabitsInput
+}
+
+input RoutineUpsertWithoutHabitsInput {
+  update: RoutineUpdateWithoutHabitsInput!
+  create: RoutineCreateWithoutHabitsInput!
+}
+
+input RoutineUpdateWithoutHabitsInput {
+  id: StringFieldUpdateOperationsInput
+  User: UserUpdateOneWithoutRoutinesNestedInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+}
+
+input UserUpdateOneWithoutRoutinesNestedInput {
+  create: UserCreateWithoutRoutinesInput
+  connectOrCreate: UserCreateOrConnectWithoutRoutinesInput
+  upsert: UserUpsertWithoutRoutinesInput
+  disconnect: Boolean
+  delete: Boolean
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutRoutinesInput
+}
+
+input UserUpsertWithoutRoutinesInput {
+  update: UserUpdateWithoutRoutinesInput!
+  create: UserCreateWithoutRoutinesInput!
+}
+
+input UserUpdateWithoutRoutinesInput {
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  age: IntFieldUpdateOperationsInput
+  birthdate: DateTimeFieldUpdateOperationsInput
+  coins: IntFieldUpdateOperationsInput
+  bestStreak: IntFieldUpdateOperationsInput
+  currentStreak: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  lastDailyReward: DateTimeFieldUpdateOperationsInput
+  dailyRewardCount: IntFieldUpdateOperationsInput
+  plants: UserUpdateplantsInput
+  userSettings: UserSettingsUpdateOneRequiredWithoutUserNestedInput
+  habits: HabitUpdateManyWithoutUserNestedInput
+  toDos: ToDoListUpdateManyWithoutUserNestedInput
+}
+
+input HabitUpdateWithWhereUniqueWithoutUserInput {
+  where: HabitWhereUniqueInput!
+  data: HabitUpdateWithoutUserInput!
+}
+
+input HabitUpdateManyWithWhereWithoutUserInput {
+  where: HabitScalarWhereInput!
+  data: HabitUpdateManyMutationInput!
+}
+
+input HabitCreateInput {
+  id: String
+  frequencyPerDay: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  title: String!
+  isPaused: Boolean
+  lastPlantReward: Timestamp
+  isDeleted: Boolean
+  color: HabitColorEnum
+  icon: HabitIconEnum!
+  period: HabitPeriodEnum
+  history: HabitHistoryDayCreateNestedManyWithoutHabitInput
+  timer: HabitTimerCreateNestedOneWithoutHabitInput!
+  Routine: RoutineCreateNestedOneWithoutHabitsInput
+  User: UserCreateNestedOneWithoutHabitsInput
+  plant: HabitPlantCreateNestedOneWithoutHabitInput!
+  reminder: HabitReminderCreateNestedManyWithoutHabitInput
+  interval: HabitIntervalCreateNestedOneWithoutHabitInput!
+}
+
+input HabitUpdateInput {
+  id: StringFieldUpdateOperationsInput
+  frequencyPerDay: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  isPaused: BoolFieldUpdateOperationsInput
+  lastPlantReward: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  color: EnumHabitColorEnumFieldUpdateOperationsInput
+  icon: EnumHabitIconEnumFieldUpdateOperationsInput
+  period: EnumHabitPeriodEnumFieldUpdateOperationsInput
+  history: HabitHistoryDayUpdateManyWithoutHabitNestedInput
+  timer: HabitTimerUpdateOneRequiredWithoutHabitNestedInput
+  Routine: RoutineUpdateOneWithoutHabitsNestedInput
+  User: UserUpdateOneWithoutHabitsNestedInput
+  plant: HabitPlantUpdateOneRequiredWithoutHabitNestedInput
+  reminder: HabitReminderUpdateManyWithoutHabitNestedInput
+  interval: HabitIntervalUpdateOneRequiredWithoutHabitNestedInput
+}
+
+input ToDoListCreateInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  tasks: ToDoTaskCreateNestedManyWithoutToDoListInput
+  user: UserCreateNestedOneWithoutToDosInput
+}
+
+input UserCreateNestedOneWithoutToDosInput {
+  create: UserCreateWithoutToDosInput
+  connectOrCreate: UserCreateOrConnectWithoutToDosInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutToDosInput {
+  id: String
+  name: String!
+  email: String!
+  age: Int!
+  birthdate: Timestamp!
+  coins: Int
+  bestStreak: Int
+  currentStreak: Int
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  lastDailyReward: Timestamp
+  dailyRewardCount: Int
+  plants: UserCreateplantsInput
+  userSettings: UserSettingsCreateNestedOneWithoutUserInput!
+  routines: RoutineCreateNestedManyWithoutUserInput
+  habits: HabitCreateNestedManyWithoutUserInput
+}
+
+input UserCreateOrConnectWithoutToDosInput {
+  where: UserWhereUniqueInput!
+  create: UserCreateWithoutToDosInput!
+}
+
+input ToDoListUpdateInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  tasks: ToDoTaskUpdateManyWithoutToDoListNestedInput
+  user: UserUpdateOneWithoutToDosNestedInput
+}
+
+input UserUpdateOneWithoutToDosNestedInput {
+  create: UserCreateWithoutToDosInput
+  connectOrCreate: UserCreateOrConnectWithoutToDosInput
+  upsert: UserUpsertWithoutToDosInput
+  disconnect: Boolean
+  delete: Boolean
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutToDosInput
+}
+
+input UserUpsertWithoutToDosInput {
+  update: UserUpdateWithoutToDosInput!
+  create: UserCreateWithoutToDosInput!
+}
+
+input UserUpdateWithoutToDosInput {
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  age: IntFieldUpdateOperationsInput
+  birthdate: DateTimeFieldUpdateOperationsInput
+  coins: IntFieldUpdateOperationsInput
+  bestStreak: IntFieldUpdateOperationsInput
+  currentStreak: IntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  lastDailyReward: DateTimeFieldUpdateOperationsInput
+  dailyRewardCount: IntFieldUpdateOperationsInput
+  plants: UserUpdateplantsInput
+  userSettings: UserSettingsUpdateOneRequiredWithoutUserNestedInput
+  routines: RoutineUpdateManyWithoutUserNestedInput
+  habits: HabitUpdateManyWithoutUserNestedInput
+}
+
+input ToDoTaskUpdateInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  lastDone: NullableDateTimeFieldUpdateOperationsInput
+  date: DateTimeFieldUpdateOperationsInput
+  frequenciesByRepeatType: IntFieldUpdateOperationsInput
+  daysOfWeek: ToDoTaskUpdatedaysOfWeekInput
+  repeatType: EnumDateTimeRepeatEnumFieldUpdateOperationsInput
+  subTasks: ToDoSubtaskUpdateManyWithoutToDoTaskNestedInput
+  toDoList: ToDoListUpdateOneRequiredWithoutTasksNestedInput
+}
+
+input ToDoListUpdateOneRequiredWithoutTasksNestedInput {
+  create: ToDoListCreateWithoutTasksInput
+  connectOrCreate: ToDoListCreateOrConnectWithoutTasksInput
+  upsert: ToDoListUpsertWithoutTasksInput
+  connect: ToDoListWhereUniqueInput
+  update: ToDoListUpdateWithoutTasksInput
+}
+
+input ToDoListCreateWithoutTasksInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  user: UserCreateNestedOneWithoutToDosInput
+}
+
+input ToDoListCreateOrConnectWithoutTasksInput {
+  where: ToDoListWhereUniqueInput!
+  create: ToDoListCreateWithoutTasksInput!
+}
+
+input ToDoListUpsertWithoutTasksInput {
+  update: ToDoListUpdateWithoutTasksInput!
+  create: ToDoListCreateWithoutTasksInput!
+}
+
+input ToDoListUpdateWithoutTasksInput {
+  id: StringFieldUpdateOperationsInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  user: UserUpdateOneWithoutToDosNestedInput
+}
+
+input ToDoTaskCreateInput {
+  id: String
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  lastDone: Timestamp
+  date: Timestamp!
+  frequenciesByRepeatType: Int
+  daysOfWeek: ToDoTaskCreatedaysOfWeekInput
+  repeatType: DateTimeRepeatEnum
+  subTasks: ToDoSubtaskCreateNestedManyWithoutToDoTaskInput
+  toDoList: ToDoListCreateNestedOneWithoutTasksInput!
+}
+
+input ToDoListCreateNestedOneWithoutTasksInput {
+  create: ToDoListCreateWithoutTasksInput
+  connectOrCreate: ToDoListCreateOrConnectWithoutTasksInput
+  connect: ToDoListWhereUniqueInput
+}
+
+input RoutineUpdateInput {
+  id: StringFieldUpdateOperationsInput
+  User: UserUpdateOneWithoutRoutinesNestedInput
+  title: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  isDeleted: BoolFieldUpdateOperationsInput
+  habits: HabitUpdateManyWithoutRoutineNestedInput
+}
+
+input RoutineCreateInput {
+  id: String
+  User: UserCreateNestedOneWithoutRoutinesInput
+  title: String!
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  isDeleted: Boolean
+  habits: HabitCreateNestedManyWithoutRoutineInput
+}

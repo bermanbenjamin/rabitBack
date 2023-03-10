@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "d3c7a393-77d5-44f4-a365-d62548a18740",
+		"name": "rabit back",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n      getUser(id: \"S6gNEd53jYY8h1REFy5ZssonMQm2\"){\r\n    id,\r\n    coins,\r\n    userInfo{\r\n      name,\r\n      email\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n  createUser(\r\n    data: {\r\n      id: \"iddacarla\"\r\n      coins: 200,\r\n      userInfo: {\r\n        create: { name: \"Carla\", email: \"carla@blury.com\", age: 35 }\r\n      }\r\n      userSettings: { create: {} }\r\n    }\r\n  ) {\r\n    id\r\n  }\r\n }",
+								"variables": "{\r\n    \"id\": \"iddacarla\",\r\n    \"coins\": 200,\r\n    \"name\": \"Carla\",\r\n    \"email\":\"carla@mail.com\",\r\n    \"age\": 35\r\n\r\n}"
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

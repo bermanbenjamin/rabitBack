@@ -1,0 +1,19 @@
+import { Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
+import { HabitIconEnum } from './habit-icon.enum';
+
+@InputType()
+export class NestedEnumHabitIconEnumFilter {
+
+    @Field(() => HabitIconEnum, {nullable:true})
+    equals?: keyof typeof HabitIconEnum;
+
+    @Field(() => [HabitIconEnum], {nullable:true})
+    in?: Array<keyof typeof HabitIconEnum>;
+
+    @Field(() => [HabitIconEnum], {nullable:true})
+    notIn?: Array<keyof typeof HabitIconEnum>;
+
+    @Field(() => NestedEnumHabitIconEnumFilter, {nullable:true})
+    not?: NestedEnumHabitIconEnumFilter;
+}
